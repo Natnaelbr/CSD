@@ -21,6 +21,30 @@ const uploadFile = async (req, res) => {
   }
 };
 
+
+const listFiles = async (req, res) => {
+  try {
+    const files = await File.findAll({
+      attributes: ['id', 'fileName', 'fileType', 'createdAt']
+    });
+
+    if (!files || files.length === 0) {
+      return res.status(404).send({
+        message: "No files found."
+      });
+    }
+
+    res.status(200).json(files);
+  } catch (err) {
+    res.status(500).send({
+      message: "Could not retrieve files: " + err.message,
+    });
+  }
+};
+
+
+
+
 // Download file from MySQL
 const downloadFile = async (req, res) => {
   try {
@@ -45,4 +69,5 @@ const downloadFile = async (req, res) => {
 module.exports = {
   uploadFile,
   downloadFile,
+  listFiles, // Export the new method
 };
