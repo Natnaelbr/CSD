@@ -8,7 +8,7 @@
     /* General page styling */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #131e2a; /* Black background */
+      background-color: #131e2a; /* Dark background */
       color: #ffd700; /* Golden text */
       margin: 0;
       padding: 0;
@@ -22,17 +22,19 @@
     h1, h2 {
       text-align: center;
       font-weight: bold;
-      color: goldenrod; /* Bold golden characters */
+      color: #ab7d40; /* Bold golden characters */
       margin-bottom: 20px;
     }
 
     form {
-      background-color: #131e2a; /* Dark background for form */
+      background-color: #2b3540; /* Slightly lighter dark background for form */
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(85, 83, 83, 0.589);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       padding: 20px;
       width: 100%;
-      max-width: 350px; /* Limit max width for better vertical alignment */
+      max-width: 500px; /* Limit max width for better vertical alignment */
+      height: 100%;
+      max-height: 800px;
       margin: 20px 0;
       display: flex;
       flex-direction: column;
@@ -41,13 +43,28 @@
 
     input[type="file"], input[type="text"] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       border: 1px solid #555;
       border-radius: 5px;
       color: #fff;
-      background-color: #6666;
+      background-color: #333; /* Darker input background */
+      transition: border 0.3s ease;
     }
+
+    input[type="file"]:focus, input[type="text"]:focus {
+      border-color: #ab7d40; /* Golden border on focus */
+      outline: none;
+    }
+
+    /* Styling for button container to align buttons side by side */
+  .button-container {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+    width: 100%; /* Ensure it takes full width of form */
+    margin: 10px 0;
+    gap: 20px;
+}
 
     button {
       width: 100%;
@@ -57,30 +74,31 @@
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.3s ease;
       color: white;
-
+      border: none; /* Remove default border */
+      position: relative;
+      overflow: hidden; /* For hover effects */
     }
 
     /* Blue button style for upload */
     #uploadForm button {
-      background-color: #7f5523; /* Blue button */
-      border: 1px solid gold;
+      background-color: #7f5523; /* Upload button */
     }
 
     #uploadForm button:hover {
-      background: linear-gradient(to right,#003366, #336699, #7f5523); /* Lighter blue on hover */
+      background: linear-gradient(to right,#654838, #1e2574, #4e3d4c); /* Lighter blue on hover */
+      transform: translateY(-2px); /* Slight lift effect on hover */
     }
 
     /* Golden button style for download */
     #downloadForm button {
-      background-color: #7f5523; /* Golden button */
-      border: 1px solid gold;
-      color: white;
+      background-color: #7f5523; /* Download button */
     }
 
     #downloadForm button:hover {
-      background: linear-gradient(to right,#003366, #336699, #7f5523); /* Lighter blue on hover */
+      background: linear-gradient(to right, #003366, #336699, #7f5523); /* Lighter blue on hover */
+      transform: translateY(-2px); /* Slight lift effect on hover */
     }
 
     /* Status message styling */
@@ -88,6 +106,43 @@
       margin-top: 10px;
       color: #ffd700; /* Golden text */
       text-align: center;
+    }
+
+    /* Dropdown button styling */
+    #viewFilesButton {
+      /* width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px; */
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+
+    #viewFilesButton:hover {
+      transform: scale(1.1); /* Slight zoom on hover */
+    }
+
+    /* Dropdown icon styling */
+    #dropdownIcon {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.5s ease;
+    }
+
+    /* Container for file list */
+    #fileListContainer {
+      margin-top: 20px;
+      background-color: #1a2530; /* Dark background for file list */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      color: #ab7d40;; /* Golden text for list */
+      display: none; /* Initially hidden */
     }
 
     /* Responsive design for smaller devices */
@@ -107,16 +162,32 @@
   <form id="uploadForm" enctype="multipart/form-data">
     <h2>Upload File</h2>
     <input type="file" id="fileInput" name="file" required />
-    <button type="submit">Upload</button>
-    <div id="uploadStatus"></div>
+    <!-- Container for buttons to make them side by side -->
+  <div class="button-container">
+    <button type="submit">Upload File</button>
+    <!-- Golden Dropdown Button -->
+    <button id="viewFilesButton">
+      <img src="../assets/images/dropdown-icon.png" alt="View Files" id="dropdownIcon">
+    </button>
+  </div>
+
+  <div id="uploadStatus"></div> 
+
+    
   </form>
 
+  
+
+  <!-- Collapsible container to display the list of uploaded files (initially hidden) -->
+  <div id="fileListContainer"></div>
+
   <!-- Download Section -->
-  <form id="downloadForm">
-    <h2>Download File</h2>
-    <label for="fileId">Enter File ID to Download:</label>
-    <input type="text" id="fileId" name="fileId" required />
-    <button type="submit">Download</button>
+  <!-- <form id="downloadForm">
+    <h2>Download File</h2> -->
+    <!-- <label for="fileId">Enter File ID to Download:</label> -->
+    <!-- <input type="text" id="fileId" name="fileId" placeholder="Enter File ID to Download" required />
+    
+    <button type="submit">Download</button> -->
   </form>
 
   <script src="app.js"></script>
